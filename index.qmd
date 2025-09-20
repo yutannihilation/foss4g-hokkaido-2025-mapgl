@@ -315,6 +315,8 @@ map |>
 
 ## PMTiles
 
+- Overture Maps の建物データを表示してみる
+
 ```{r}
 #| include: false
 map <- maplibre(
@@ -355,9 +357,53 @@ m2 <- maplibre(
 compare(m1, m2, mode = "sync")
 ```
 
+## mapgl パッケージの良いところ
+
+- MapLibre GL JSでできることはけっこうできる
+- コードも、MapLibre GL JS と似た API になっているので、MapLibre GL JS を使ったことがある人なら直感的に使える
+- Shiny と組み合わせるといろいろ面白いことできそう
+
+## mapgl パッケージの悪いところ
+
+- API が低レベルなので、コードが長くなりがち
+- 「これなら普通に JavaScript 書いた方がいいのでは...？」と思うこともけっこうある
+
 ## tmap.mapgl パッケージ
 
-## Shiny とは
+[![](./images/tmap-mapgl.png)](https://r-tmap.github.io/tmap.mapgl/)
+
+## tmap.mapgl パッケージ
+
+- GIS データを可視化するパッケージ・tmap のバックエンドとして mapgl を使う
+- まだ開発中
+
+## tmap.mapgl パッケージ
+
+```{r}
+#| include: false
+library(tmap)
+library(tmap.mapgl)
+```
+
+```{r}
+#| output-location: slide
+tmap_mode("maplibre")
+
+tm_shape(d$`L02-25_01`) +
+  tm_symbols(
+    size = 0.6,
+    fill = "L02_006",
+    fill_alpha = 0.5,
+    fill.scale = tm_scale_continuous_log10(
+      values = "-matplotlib.magma"
+    )
+  )
+```
+
+## tmap.mapgl パッケージ
+
+- mapgl パッケージを自分で使うよりも圧倒的に短く書ける
+- こんな感じで、mapgl パッケージは直接使うものではなく、使いやすくラップしてくれているパッケージ越しに使うのが正解なのかも
 
 ## デプロイ先
 
