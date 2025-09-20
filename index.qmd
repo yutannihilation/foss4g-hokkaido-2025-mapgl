@@ -32,11 +32,22 @@ knitr::opts_chunk$set(echo = TRUE)
 :::
 :::
 
-## 今日話すこと
+## Rでインタラクティブな地図といえば
 
-- mapgl パッケージ
-- tmap.mapgl パッケージ
-- Shiny で使う場合
+[![](./images/kazutan.png)](https://rpubs.com/kazutan/leaflet_slide)
+
+## Rでインタラクティブな地図といえば
+
+- leaflet パッケージ
+- 10年前から変わらない存在感
+
+::: {.incremental}
+- でも、そろそろ MapLibre を使いたくないですか？？
+:::
+
+## mapgl パッケージ
+
+[![](./images/mapgl.png)](https://walker-data.com/mapgl/index.html)
 
 ## mapgl パッケージ
 
@@ -45,8 +56,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## 基本的な使い方
 
-- `maplibre()`: MapLibre GL JS
-- `mapboxgl()`: Mapbox GL JS（API キーが必要）
+- `maplibre()`: MapLibre GL JS で地図を表示
+- `mapboxgl()`: Mapbox GL JS で地図を表示
+    - API キーが必要
 
 ## 地図を表示
 
@@ -59,9 +71,33 @@ library(mapgl)
 maplibre()
 ```
 
-## 中心とズームレベルを指定
+## Globe projection
 
 ```{r}
+maplibre() |>
+  set_projection("globe")
+```
+
+## 中心とズームレベルを指定
+
+```r
+maplibre()
+```
+
+## 中心とズームレベルを指定
+
+
+```{r}
+#| code-line-numbers: "2-3"
+maplibre(
+  center = c(141.359719, 43.071776),
+  zoom = 13
+)
+```
+
+## スタイルを指定
+
+```r
 maplibre(
   center = c(141.359719, 43.071776),
   zoom = 13
@@ -71,11 +107,252 @@ maplibre(
 ## スタイルを指定
 
 ```{r}
+#| output-location: slide
+#| code-line-numbers: "1-3,6"
+# 地理院地図のスタイル
+gsi_style <-
+  "https://gsi-cyberjapan.github.io/gsivectortile-mapbox-gl-js/pale.json"
+
 maplibre(
-  style = "https://gsi-cyberjapan.github.io/gsivectortile-mapbox-gl-js/pale.json",
+  style = gsi_style,
   center = c(141.359719, 43.071776),
   zoom = 13
 )
+```
+
+## 傾けてみる
+
+```r
+maplibre(
+  style = gsi_style,
+  center = c(141.359719, 43.071776),
+  zoom = 16
+)
+```
+
+## 傾けてみる
+
+```{r}
+#| output-location: slide
+#| code-line-numbers: "5-6"
+maplibre(
+  style = gsi_style,
+  center = c(141.359719, 43.071776),
+  zoom = 16,
+  pitch = 75,
+  bearing = 136,
+)
+```
+
+## 動かしてみる
+
+```{r}
+#| output-location: slide
+maplibre() |>
+  set_projection("globe") |>
+  fly_to(
+    center = c(141.359719, 43.071776),
+    zoom = 18,
+    pitch = 75,
+    bearing = 136
+  )
+```
+
+## データを表示する
+
+- Rで生成したデータを表示する場合は、`sf` 形式で渡す
+- それ以外のデータソース（GeoJSON とか PMTiles とか）も使える
+
+::: {.incremental}
+- ただ、ちょっとコードがお手軽じゃないかも...
+:::
+
+
+## データを表示する
+
+- 国土数値情報からダウンロードした都道府県地価調査（2025年）のデータ
+
+```{r}
+#| include: false
+d <- kokudosuuchi::readKSJData("data/L02-25_01_GML.zip")
+map <- maplibre(
+  style = gsi_style,
+  center = c(141.359719, 43.071776),
+  zoom = 6
+)
+```
+
+```{r}
+#| output-location: slide
+map |>
+  add_circle_layer(
+    id = "chika",
+    source = d$`L02-25_01`,
+    circle_radius = 8,
+    circle_opacity = 0.7
+  )
+```
+
+## データを表示する
+
+- 色が欲しい...
+
+## 色のマッピングをつくる
+
+```{r}
+pal <- interpolate_palette(
+  data = d$`L02-25_01`,
+  column = "L02_006", # カラム名
+  method = "quantile",
+  n = 4,
+  palette = scales::viridis_pal(option = "F", direction = -1)
+)
+```
+
+## 色のマッピングを指定する
+
+```{r}
+#| output-location: slide
+#| code-line-numbers: "7"
+map |>
+  add_circle_layer(
+    id = "chika",
+    source = d$`L02-25_01`,
+    circle_radius = 8,
+    circle_opacity = 0.7,
+    circle_color = pal$expression
+  )
+```
+
+## 色のマッピングを指定する
+
+- 凡例が欲しい...
+
+## 凡例を付ける
+
+```{r}
+#| include: false
+map_with_circle <- map |>
+  add_circle_layer(
+    id = "chika",
+    source = d$`L02-25_01`,
+    circle_radius = 8,
+    circle_opacity = 0.7,
+    circle_color = pal$expression
+  )
+```
+
+```{r}
+#| output-location: slide
+map_with_circle |>
+  add_continuous_legend(
+    "地価 [円]",
+    values = get_legend_labels(pal, digits = 0),
+    colors = get_legend_colors(pal)
+  )
+```
+
+## 凡例を付ける
+
+- ポップアップで実際の値を確認したい...
+
+## `tooltip`（マウスオーバーで表示）
+
+```{r}
+#| include: false
+legend <- \(x) {
+  add_continuous_legend(
+    x,
+    "地価 [円]",
+    values = get_legend_labels(pal, digits = 0),
+    colors = get_legend_colors(pal)
+  )
+}
+```
+
+```{r}
+#| output-location: slide
+#| code-line-numbers: "8"
+map |>
+  add_circle_layer(
+    id = "chika",
+    source = d$`L02-25_01`,
+    circle_radius = 8,
+    circle_opacity = 0.7,
+    circle_color = pal$expression,
+    tooltip = "L02_006"
+  ) |>
+  legend()
+```
+
+## `popup`（クリックで表示）
+
+```{r}
+#| output-location: slide
+#| code-line-numbers: "8"
+map |>
+  add_circle_layer(
+    id = "chika",
+    source = d$`L02-25_01`,
+    circle_radius = 8,
+    circle_opacity = 0.7,
+    circle_color = pal$expression,
+    popup = "L02_006"
+  ) |>
+  legend()
+```
+
+## レイヤーの種類
+
+- polygon
+- line
+- circle
+- symbol
+- heatmap
+- fill-extrusion（3D）
+- raster
+- marker
+
+## PMTiles
+
+```{r}
+#| include: false
+map <- maplibre(
+  center = c(141.359719, 43.071776),
+  zoom = 13
+)
+```
+
+```{r}
+#| output-location: slide
+map |>
+  add_pmtiles_source(
+    id = "overturemaps",
+    url = "https://overturemaps-tiles-us-west-2-beta.s3.amazonaws.com/2025-06-25/buildings.pmtiles"
+  ) |>
+  add_fill_layer(
+    id = "overturemaps-layer",
+    source = "overturemaps",
+    source_layer = "building",
+    fill_color = "red",
+    fill_opacity = 0.3
+  )
+```
+
+## 左右比較
+
+```{r}
+#| output-location: slide
+m1 <- maplibre(
+  center = c(141.359719, 43.071776),
+  zoom = 13
+)
+m2 <- maplibre(
+  style = gsi_style,
+  center = c(141.359719, 43.071776),
+  zoom = 13
+)
+compare(m1, m2, mode = "sync")
 ```
 
 ## tmap.mapgl パッケージ
