@@ -1,0 +1,91 @@
+---
+title: "mapgl パッケージ<br/>の紹介"
+subtitle: "2025-09-26 FOSS4G Hokkaido 2025"
+author: "湯谷啓明"
+format:
+  revealjs:
+    theme: ["simple", "custom.scss"]
+    highlight-style: dracula
+    slide-number: true
+---
+
+```{r setup}
+#| include: false
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## ドーモ！
+
+::: columns
+::: {.column width="30%"}
+![](images/icon.jpg){fig-align="center"}
+:::
+
+::: {.column width="70%"}
+
+湯谷啓明
+
+- 株式会社 MIERUNE 所属
+- 好きな言語：R、忍殺語
+- R関連のリリースノートを眺めてみる、という[ニッチな YouTube チャンネル](https://www.youtube.com/channel/UCDHzgi5BGU5F-LXxQIIOyDw)やってます
+
+:::
+:::
+
+## 今日話すこと
+
+- mapgl パッケージ
+- tmap.mapgl パッケージ
+- Shiny で使う場合
+
+## mapgl パッケージ
+
+- GIS データをインタラクティブに可視化するための R パッケージ
+- MapLibre GL JS か Mapbox GL JS が選べる
+
+## 基本的な使い方
+
+- `maplibre()`: MapLibre GL JS
+- `mapboxgl()`: Mapbox GL JS（API キーが必要）
+
+## 地図を表示
+
+```{r}
+#| include: false
+library(mapgl)
+```
+
+```{r}
+maplibre()
+```
+
+## 中心とズームレベルを指定
+
+```{r}
+maplibre(
+  center = c(141.359719, 43.071776),
+  zoom = 13
+)
+```
+
+## スタイルを指定
+
+```{r}
+maplibre(
+  style = "https://gsi-cyberjapan.github.io/gsivectortile-mapbox-gl-js/pale.json",
+  center = c(141.359719, 43.071776),
+  zoom = 13
+)
+```
+
+## tmap.mapgl パッケージ
+
+## Shiny とは
+
+## デプロイ先
+
+## Python の場合
+
+- leafmap
+
+

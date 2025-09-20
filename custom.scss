@@ -1,0 +1,47 @@
+// This file is based on dracula.scss in revealjs:
+//
+// https://github.com/hakimel/reveal.js/blob/master/dist/theme/dracula.css
+
+/*-- scss:defaults --*/
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@600&family=Noto+Sans+JP:wght@600;900&display=swap');
+
+$font-family-sans-serif: "Noto Sans JP";
+$font-family-monospace: "Fira Code";
+
+$presentation-font-size-root: 48px;
+$presentation-h1-font-size: 2.0em;
+$presentation-h2-font-size: 1.3em;
+$presentation-heading-font: "Noto Sans JP";
+$presentation-heading-font-weight: 900;
+$presentation-heading-color: #04a0bf !default;
+
+$body-color: rgb(81, 98, 104);
+$code-color: darken($presentation-heading-color, 20%);
+
+$code-block-font-size: 0.8em;
+$code-block-font-weight: 600;
+
+/*-- scss:rules --*/
+
+.reveal strong {
+  color: rgb(166, 23, 23);
+}
+
+// code line highlight はしたいが、line number は欲しくないので CSS で消す
+.reveal pre code {
+  margin-left: -1.5em;
+}
+
+.reveal h1.title,
+.reveal .slide h1,
+.reveal .slide h2,
+.reveal .slide h3,
+.reveal .slide h4 {
+  text-transform: none;
+}
+
+span.slide-number-a {
+  font-size: 3em;
+  color: var(--r-main-color);
+}
