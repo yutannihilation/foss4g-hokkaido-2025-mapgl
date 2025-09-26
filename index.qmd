@@ -26,19 +26,37 @@ knitr::opts_chunk$set(echo = TRUE)
 湯谷啓明
 
 - 株式会社 MIERUNE 所属
+- GIS エンジニア見習いになって半年
 - 好きな言語：R、忍殺語
-- R関連のリリースノートを眺めてみる、という[ニッチな YouTube チャンネル](https://www.youtube.com/channel/UCDHzgi5BGU5F-LXxQIIOyDw)やってます
 
 :::
 :::
 
-## Rでインタラクティブな地図といえば
+## 今日話すこと
+
+- R で MapLibre の地図を作る方法
+- 具体的なパッケージの使い方よりは「こんなのもあるよ」という紹介
+- R ユーザーの人もそうじゃない人も気楽に聞いてください
+
+## ちなみに Python の場合
+
+[![](./images/leafmap.png)](https://leafmap.org/)
+
+## ちなみに Python の場合
+
+[![](./images/lonboard.png)](https://developmentseed.org/lonboard/latest/)
+
+## Rでインタラクティブな地図といえば？
+
+::: {.fragment}
 
 [![](./images/kazutan.png)](https://rpubs.com/kazutan/leaflet_slide)
 
+:::
+
 ## Rでインタラクティブな地図といえば
 
-- leaflet パッケージ
+- leaflet パッケージ先生
 - 10年前から変わらない存在感
 
 ::: {.incremental}
@@ -64,6 +82,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 #| include: false
+
+# compare() が衝突するので先に呼び出しておく
+library(terra)
+
 library(mapgl)
 ```
 
@@ -80,24 +102,9 @@ maplibre() |>
 
 ## 中心とズームレベルを指定
 
-```r
-maplibre()
-```
-
-## 中心とズームレベルを指定
-
-
 ```{r}
+#| output-location: slide
 #| code-line-numbers: "2-3"
-maplibre(
-  center = c(141.359719, 43.071776),
-  zoom = 13
-)
-```
-
-## スタイルを指定
-
-```r
 maplibre(
   center = c(141.359719, 43.071776),
   zoom = 13
@@ -117,16 +124,6 @@ maplibre(
   style = gsi_style,
   center = c(141.359719, 43.071776),
   zoom = 13
-)
-```
-
-## 傾けてみる
-
-```r
-maplibre(
-  style = gsi_style,
-  center = c(141.359719, 43.071776),
-  zoom = 16
 )
 ```
 
@@ -174,7 +171,8 @@ maplibre() |>
 
 ```{r}
 #| include: false
-d <- kokudosuuchi::readKSJData("data/L02-25_01_GML.zip")
+data <- kokudosuuchi::readKSJData("data/L02-25_01_GML.zip")$`L02-25_01`
+
 map <- maplibre(
   style = gsi_style,
   center = c(141.359719, 43.071776),
@@ -187,7 +185,7 @@ map <- maplibre(
 map |>
   add_circle_layer(
     id = "chika",
-    source = d$`L02-25_01`,
+    source = data,
     circle_radius = 8,
     circle_opacity = 0.7
   )
@@ -199,10 +197,12 @@ map |>
 
 ## 色のマッピングをつくる
 
+- `L02_006` が地価が入っているカラム
+
 ```{r}
 pal <- interpolate_palette(
-  data = d$`L02-25_01`,
-  column = "L02_006", # カラム名
+  data = data,
+  column = "L02_006",
   method = "quantile",
   n = 4,
   palette = scales::viridis_pal(option = "F", direction = -1)
@@ -217,7 +217,7 @@ pal <- interpolate_palette(
 map |>
   add_circle_layer(
     id = "chika",
-    source = d$`L02-25_01`,
+    source = data,
     circle_radius = 8,
     circle_opacity = 0.7,
     circle_color = pal$expression
@@ -235,7 +235,7 @@ map |>
 map_with_circle <- map |>
   add_circle_layer(
     id = "chika",
-    source = d$`L02-25_01`,
+    source = data,
     circle_radius = 8,
     circle_opacity = 0.7,
     circle_color = pal$expression
@@ -276,7 +276,7 @@ legend <- \(x) {
 map |>
   add_circle_layer(
     id = "chika",
-    source = d$`L02-25_01`,
+    source = data,
     circle_radius = 8,
     circle_opacity = 0.7,
     circle_color = pal$expression,
@@ -293,7 +293,7 @@ map |>
 map |>
   add_circle_layer(
     id = "chika",
-    source = d$`L02-25_01`,
+    source = data,
     circle_radius = 8,
     circle_opacity = 0.7,
     circle_color = pal$expression,
@@ -312,6 +312,37 @@ map |>
 - fill-extrusion（3D）
 - raster
 - marker
+
+## ラスター
+
+- 逆距離荷重で地価を補間したラスターを作成
+
+```{r}
+# terra の形式に変換
+v <- vect(data)
+# 点を含む範囲の空のラスターを作成
+tmpl <- rast(ext(v), ncol = 400, nrow = 400, crs = crs(v))
+# ラスターの各ピクセルに対して値を補間
+r_idw <- interpIDW(tmpl, v, field = "L02_006", radius = 0.3)
+# 見やすくするために対数を取っておく
+r_idw_log10 <- log10(r_idw)
+```
+
+## ラスター
+
+```{r}
+#| output-location: slide
+map |>
+  add_image_source(
+    id = "idw",
+    data = r_idw_log10
+  ) |>
+  add_raster_layer(
+    id = "idw_layer",
+    source = "idw",
+    raster_opacity = 0.7
+  )
+```
 
 ## PMTiles
 
@@ -368,6 +399,21 @@ compare(m1, m2, mode = "sync")
 - API が低レベルなので、コードが長くなりがち
 - 「これなら普通に JavaScript 書いた方がいいのでは...？」と思うこともけっこうある
 
+## 例:さっきの色の指定
+
+::: {style="font-size: 50%;"}
+
+```{r}
+jsonlite::toJSON(pal$expression, pretty = TRUE, auto_unbox = TRUE)
+```
+
+:::
+
+## 例:さっきの色の指定
+
+- MapLibre のスタイルをそのまま R で書いてる感じ
+- さすがに生すぎるのでは...？
+
 ## tmap.mapgl パッケージ
 
 [![](./images/tmap-mapgl.png)](https://r-tmap.github.io/tmap.mapgl/)
@@ -375,7 +421,7 @@ compare(m1, m2, mode = "sync")
 ## tmap.mapgl パッケージ
 
 - GIS データを可視化するパッケージ・tmap のバックエンドとして mapgl を使う
-- まだ開発中
+- つい最近 CRAN に登録された。
 
 ## tmap.mapgl パッケージ
 
@@ -389,7 +435,7 @@ library(tmap.mapgl)
 #| output-location: slide
 tmap_mode("maplibre")
 
-tm_shape(d$`L02-25_01`) +
+tm_shape(data) +
   tm_symbols(
     size = 0.6,
     fill = "L02_006",
@@ -400,15 +446,52 @@ tm_shape(d$`L02-25_01`) +
   )
 ```
 
+## 比較：さっきまでのコード
+
+::: {style="font-size: 50%;"}
+
+```r
+pal <- interpolate_palette(
+  data = data,
+  column = "L02_006", # カラム名
+  method = "quantile",
+  n = 4,
+  palette = scales::viridis_pal(option = "F", direction = -1)
+)
+
+map |>
+  add_circle_layer(
+    id = "chika",
+    source = data,
+    circle_radius = 8,
+    circle_opacity = 0.7,
+    circle_color = pal$expression
+  ) |>
+  add_continuous_legend(
+    "地価 [円]",
+    values = get_legend_labels(pal, digits = 0),
+    colors = get_legend_colors(pal)
+  )
+```
+
+:::
+
 ## tmap.mapgl パッケージ
 
 - mapgl パッケージを自分で使うよりも圧倒的に短く書ける
+- 対応していないレイヤーの種類もある（ヒートマップとか）
 - こんな感じで、mapgl パッケージは直接使うものではなく、使いやすくラップしてくれているパッケージ越しに使うのが正解なのかも
 
-## デプロイ先
+## 実際、使うことはあるのか？
 
-## Python の場合
+- 正直、leaflet パッケージの方が便利
+  - プラグインが豊富
+  - まあまあ使いやすいインターフェース
+- 3D表示をしたい時は mapgl が便利かも
+- 重いデータの表示も mapgl が上かも
 
-- leafmap
+## まとめ
 
-
+- R から MapLibre を使いたい時は mapgl パッケージ
+- mapgl パッケージを生で使うより、tmap.mapgl パッケージを使うと便利
+- 今後に期待！
