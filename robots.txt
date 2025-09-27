@@ -1,0 +1,1 @@
+Sitemap: https://yutannihilation.github.io/foss4g-hokkaido-2025-mapgl/sitemap.xml

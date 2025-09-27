@@ -1,0 +1,387 @@
+[
+  {
+    "objectID": "index.html#ドーモ",
+    "href": "index.html#ドーモ",
+    "title": "mapgl パッケージの紹介",
+    "section": "ドーモ！",
+    "text": "ドーモ！\n\n\n\n\n\n\n\n\n湯谷啓明\n\n株式会社 MIERUNE 所属\nGIS エンジニア見習いになって半年\n好きな言語：R、忍殺語"
+  },
+  {
+    "objectID": "index.html#今日話すこと",
+    "href": "index.html#今日話すこと",
+    "title": "mapgl パッケージの紹介",
+    "section": "今日話すこと",
+    "text": "今日話すこと\n\nR で MapLibre の地図を作る方法\n具体的なパッケージの使い方よりは「こんなのもあるよ」という紹介\nR ユーザーの人もそうじゃない人も気楽に聞いてください"
+  },
+  {
+    "objectID": "index.html#今日話さないことお詫び",
+    "href": "index.html#今日話さないことお詫び",
+    "title": "mapgl パッケージの紹介",
+    "section": "今日話さないこと（お詫び）",
+    "text": "今日話さないこと（お詫び）\n\nストーリーマップ機能\nTurf.jsによるクライアントサイドでの処理\n\nShiny（R のウェブアプリケーションフレームワーク）前提の話になって、ちょっとマニアックすぎるので省略。 気になる人は懇親会で話しましょう！"
+  },
+  {
+    "objectID": "index.html#ちなみに-python-の場合",
+    "href": "index.html#ちなみに-python-の場合",
+    "title": "mapgl パッケージの紹介",
+    "section": "ちなみに Python の場合",
+    "text": "ちなみに Python の場合"
+  },
+  {
+    "objectID": "index.html#ちなみに-python-の場合-1",
+    "href": "index.html#ちなみに-python-の場合-1",
+    "title": "mapgl パッケージの紹介",
+    "section": "ちなみに Python の場合",
+    "text": "ちなみに Python の場合"
+  },
+  {
+    "objectID": "index.html#rでインタラクティブな地図といえば",
+    "href": "index.html#rでインタラクティブな地図といえば",
+    "title": "mapgl パッケージの紹介",
+    "section": "Rでインタラクティブな地図といえば？",
+    "text": "Rでインタラクティブな地図といえば？"
+  },
+  {
+    "objectID": "index.html#rでインタラクティブな地図といえば-1",
+    "href": "index.html#rでインタラクティブな地図といえば-1",
+    "title": "mapgl パッケージの紹介",
+    "section": "Rでインタラクティブな地図といえば",
+    "text": "Rでインタラクティブな地図といえば\n\nleaflet パッケージ先生\n10年前から変わらない存在感\n\n\nでも、そろそろ MapLibre を使いたくないですか？？"
+  },
+  {
+    "objectID": "index.html#mapgl-パッケージ",
+    "href": "index.html#mapgl-パッケージ",
+    "title": "mapgl パッケージの紹介",
+    "section": "mapgl パッケージ",
+    "text": "mapgl パッケージ"
+  },
+  {
+    "objectID": "index.html#mapgl-パッケージ-1",
+    "href": "index.html#mapgl-パッケージ-1",
+    "title": "mapgl パッケージの紹介",
+    "section": "mapgl パッケージ",
+    "text": "mapgl パッケージ\n\nGIS データをインタラクティブに可視化するための R パッケージ\nMapLibre GL JS か Mapbox GL JS が選べる"
+  },
+  {
+    "objectID": "index.html#基本的な使い方",
+    "href": "index.html#基本的な使い方",
+    "title": "mapgl パッケージの紹介",
+    "section": "基本的な使い方",
+    "text": "基本的な使い方\n\nmaplibre(): MapLibre GL JS で地図を表示\nmapboxgl(): Mapbox GL JS で地図を表示\n\nAPI キーが必要"
+  },
+  {
+    "objectID": "index.html#地図を表示",
+    "href": "index.html#地図を表示",
+    "title": "mapgl パッケージの紹介",
+    "section": "地図を表示",
+    "text": "地図を表示\n\nmaplibre()"
+  },
+  {
+    "objectID": "index.html#globe-projection",
+    "href": "index.html#globe-projection",
+    "title": "mapgl パッケージの紹介",
+    "section": "Globe projection",
+    "text": "Globe projection\n\nmaplibre() |&gt;\n  set_projection(\"globe\")"
+  },
+  {
+    "objectID": "index.html#中心とズームレベルを指定",
+    "href": "index.html#中心とズームレベルを指定",
+    "title": "mapgl パッケージの紹介",
+    "section": "中心とズームレベルを指定",
+    "text": "中心とズームレベルを指定\n\nmaplibre(\n  center = c(141.359719, 43.071776),\n  zoom = 13\n)"
+  },
+  {
+    "objectID": "index.html#中心とズームレベルを指定-output",
+    "href": "index.html#中心とズームレベルを指定-output",
+    "title": "mapgl パッケージの紹介",
+    "section": "中心とズームレベルを指定",
+    "text": "中心とズームレベルを指定"
+  },
+  {
+    "objectID": "index.html#スタイルを指定",
+    "href": "index.html#スタイルを指定",
+    "title": "mapgl パッケージの紹介",
+    "section": "スタイルを指定",
+    "text": "スタイルを指定\n\n# 地理院地図のスタイル\ngsi_style &lt;-\n  \"https://gsi-cyberjapan.github.io/gsivectortile-mapbox-gl-js/pale.json\"\n\nmaplibre(\n  style = gsi_style,\n  center = c(141.359719, 43.071776),\n  zoom = 13\n)"
+  },
+  {
+    "objectID": "index.html#スタイルを指定-output",
+    "href": "index.html#スタイルを指定-output",
+    "title": "mapgl パッケージの紹介",
+    "section": "スタイルを指定",
+    "text": "スタイルを指定"
+  },
+  {
+    "objectID": "index.html#傾けてみる",
+    "href": "index.html#傾けてみる",
+    "title": "mapgl パッケージの紹介",
+    "section": "傾けてみる",
+    "text": "傾けてみる\n\nmaplibre(\n  style = gsi_style,\n  center = c(141.359719, 43.071776),\n  zoom = 16,\n  pitch = 75,\n  bearing = 136,\n)"
+  },
+  {
+    "objectID": "index.html#傾けてみる-output",
+    "href": "index.html#傾けてみる-output",
+    "title": "mapgl パッケージの紹介",
+    "section": "傾けてみる",
+    "text": "傾けてみる"
+  },
+  {
+    "objectID": "index.html#動かしてみる",
+    "href": "index.html#動かしてみる",
+    "title": "mapgl パッケージの紹介",
+    "section": "動かしてみる",
+    "text": "動かしてみる\n\nmaplibre() |&gt;\n  set_projection(\"globe\") |&gt;\n  fly_to(\n    center = c(141.359719, 43.071776),\n    zoom = 18,\n    pitch = 75,\n    bearing = 136\n  )\n\n\n（リロードしないと動かないかも…）"
+  },
+  {
+    "objectID": "index.html#動かしてみる-output",
+    "href": "index.html#動かしてみる-output",
+    "title": "mapgl パッケージの紹介",
+    "section": "動かしてみる",
+    "text": "動かしてみる"
+  },
+  {
+    "objectID": "index.html#データを表示する",
+    "href": "index.html#データを表示する",
+    "title": "mapgl パッケージの紹介",
+    "section": "データを表示する",
+    "text": "データを表示する\n\nRで生成したデータを表示する場合は、sf 形式で渡す\nそれ以外のデータソース（GeoJSON とか PMTiles とか）も使える\n\n\nただ、ちょっとコードがお手軽じゃないかも…"
+  },
+  {
+    "objectID": "index.html#データを表示する-1",
+    "href": "index.html#データを表示する-1",
+    "title": "mapgl パッケージの紹介",
+    "section": "データを表示する",
+    "text": "データを表示する\n\n国土数値情報からダウンロードした都道府県地価調査（2025年）のデータ\n\n\nmap |&gt;\n  add_circle_layer(\n    id = \"chika\",\n    source = data,\n    circle_radius = 8,\n    circle_opacity = 0.7\n  )"
+  },
+  {
+    "objectID": "index.html#データを表示する-1-output",
+    "href": "index.html#データを表示する-1-output",
+    "title": "mapgl パッケージの紹介",
+    "section": "データを表示する",
+    "text": "データを表示する"
+  },
+  {
+    "objectID": "index.html#データを表示する-2",
+    "href": "index.html#データを表示する-2",
+    "title": "mapgl パッケージの紹介",
+    "section": "データを表示する",
+    "text": "データを表示する\n\n色が欲しい…"
+  },
+  {
+    "objectID": "index.html#色のマッピングをつくる",
+    "href": "index.html#色のマッピングをつくる",
+    "title": "mapgl パッケージの紹介",
+    "section": "色のマッピングをつくる",
+    "text": "色のマッピングをつくる\n\nL02_006 が地価が入っているカラム\n\n\npal &lt;- interpolate_palette(\n  data = data,\n  column = \"L02_006\",\n  method = \"quantile\",\n  n = 4,\n  palette = scales::viridis_pal(option = \"F\", direction = -1)\n)"
+  },
+  {
+    "objectID": "index.html#色のマッピングを指定する",
+    "href": "index.html#色のマッピングを指定する",
+    "title": "mapgl パッケージの紹介",
+    "section": "色のマッピングを指定する",
+    "text": "色のマッピングを指定する\n\nmap |&gt;\n  add_circle_layer(\n    id = \"chika\",\n    source = data,\n    circle_radius = 8,\n    circle_opacity = 0.7,\n    circle_color = pal$expression\n  )"
+  },
+  {
+    "objectID": "index.html#色のマッピングを指定する-output",
+    "href": "index.html#色のマッピングを指定する-output",
+    "title": "mapgl パッケージの紹介",
+    "section": "色のマッピングを指定する",
+    "text": "色のマッピングを指定する"
+  },
+  {
+    "objectID": "index.html#色のマッピングを指定する-1",
+    "href": "index.html#色のマッピングを指定する-1",
+    "title": "mapgl パッケージの紹介",
+    "section": "色のマッピングを指定する",
+    "text": "色のマッピングを指定する\n\n凡例が欲しい…"
+  },
+  {
+    "objectID": "index.html#凡例を付ける",
+    "href": "index.html#凡例を付ける",
+    "title": "mapgl パッケージの紹介",
+    "section": "凡例を付ける",
+    "text": "凡例を付ける\n\nmap_with_circle |&gt;\n  add_continuous_legend(\n    \"地価 [円]\",\n    values = get_legend_labels(pal, digits = 0),\n    colors = get_legend_colors(pal)\n  )"
+  },
+  {
+    "objectID": "index.html#凡例を付ける-output",
+    "href": "index.html#凡例を付ける-output",
+    "title": "mapgl パッケージの紹介",
+    "section": "凡例を付ける",
+    "text": "凡例を付ける"
+  },
+  {
+    "objectID": "index.html#凡例を付ける-1",
+    "href": "index.html#凡例を付ける-1",
+    "title": "mapgl パッケージの紹介",
+    "section": "凡例を付ける",
+    "text": "凡例を付ける\n\nポップアップで実際の値を確認したい…"
+  },
+  {
+    "objectID": "index.html#tooltipマウスオーバーで表示",
+    "href": "index.html#tooltipマウスオーバーで表示",
+    "title": "mapgl パッケージの紹介",
+    "section": "tooltip（マウスオーバーで表示）",
+    "text": "tooltip（マウスオーバーで表示）\n\nmap |&gt;\n  add_circle_layer(\n    id = \"chika\",\n    source = data,\n    circle_radius = 8,\n    circle_opacity = 0.7,\n    circle_color = pal$expression,\n    tooltip = \"L02_006\"\n  ) |&gt;\n  legend()"
+  },
+  {
+    "objectID": "index.html#tooltipマウスオーバーで表示-output",
+    "href": "index.html#tooltipマウスオーバーで表示-output",
+    "title": "mapgl パッケージの紹介",
+    "section": "tooltip（マウスオーバーで表示）",
+    "text": "tooltip（マウスオーバーで表示）"
+  },
+  {
+    "objectID": "index.html#popupクリックで表示",
+    "href": "index.html#popupクリックで表示",
+    "title": "mapgl パッケージの紹介",
+    "section": "popup（クリックで表示）",
+    "text": "popup（クリックで表示）\n\nmap |&gt;\n  add_circle_layer(\n    id = \"chika\",\n    source = data,\n    circle_radius = 8,\n    circle_opacity = 0.7,\n    circle_color = pal$expression,\n    popup = \"L02_006\"\n  ) |&gt;\n  legend()"
+  },
+  {
+    "objectID": "index.html#popupクリックで表示-output",
+    "href": "index.html#popupクリックで表示-output",
+    "title": "mapgl パッケージの紹介",
+    "section": "popup（クリックで表示）",
+    "text": "popup（クリックで表示）"
+  },
+  {
+    "objectID": "index.html#レイヤーの種類",
+    "href": "index.html#レイヤーの種類",
+    "title": "mapgl パッケージの紹介",
+    "section": "レイヤーの種類",
+    "text": "レイヤーの種類\n\npolygon\nline\ncircle\nsymbol\nheatmap\nfill-extrusion（3D）\nraster\nmarker"
+  },
+  {
+    "objectID": "index.html#ラスター",
+    "href": "index.html#ラスター",
+    "title": "mapgl パッケージの紹介",
+    "section": "ラスター",
+    "text": "ラスター\n\n逆距離荷重で地価を補間したラスターを作成\n\n\n# terra の形式に変換\nv &lt;- vect(data)\n# 点を含む範囲の空のラスターを作成\ntmpl &lt;- rast(ext(v), ncol = 400, nrow = 400, crs = crs(v))\n# ラスターの各ピクセルに対して値を補間\nr_idw &lt;- interpIDW(tmpl, v, field = \"L02_006\", radius = 0.3)\n# 見やすくするために対数を取っておく\nr_idw_log10 &lt;- log10(r_idw)"
+  },
+  {
+    "objectID": "index.html#ラスター-1",
+    "href": "index.html#ラスター-1",
+    "title": "mapgl パッケージの紹介",
+    "section": "ラスター",
+    "text": "ラスター\n\nmap |&gt;\n  add_image_source(\n    id = \"idw\",\n    data = r_idw_log10\n  ) |&gt;\n  add_raster_layer(\n    id = \"idw_layer\",\n    source = \"idw\",\n    raster_opacity = 0.7\n  )"
+  },
+  {
+    "objectID": "index.html#ラスター-1-output",
+    "href": "index.html#ラスター-1-output",
+    "title": "mapgl パッケージの紹介",
+    "section": "ラスター",
+    "text": "ラスター"
+  },
+  {
+    "objectID": "index.html#pmtiles",
+    "href": "index.html#pmtiles",
+    "title": "mapgl パッケージの紹介",
+    "section": "PMTiles",
+    "text": "PMTiles\n\nOverture Maps の建物データを表示してみる\n\n\nmap |&gt;\n  add_pmtiles_source(\n    id = \"overturemaps\",\n    url = \"https://overturemaps-tiles-us-west-2-beta.s3.amazonaws.com/2025-06-25/buildings.pmtiles\"\n  ) |&gt;\n  add_fill_layer(\n    id = \"overturemaps-layer\",\n    source = \"overturemaps\",\n    source_layer = \"building\",\n    fill_color = \"red\",\n    fill_opacity = 0.3\n  )"
+  },
+  {
+    "objectID": "index.html#pmtiles-output",
+    "href": "index.html#pmtiles-output",
+    "title": "mapgl パッケージの紹介",
+    "section": "PMTiles",
+    "text": "PMTiles"
+  },
+  {
+    "objectID": "index.html#左右比較",
+    "href": "index.html#左右比較",
+    "title": "mapgl パッケージの紹介",
+    "section": "左右比較",
+    "text": "左右比較\n\nm1 &lt;- maplibre(\n  center = c(141.359719, 43.071776),\n  zoom = 13\n)\nm2 &lt;- maplibre(\n  style = gsi_style,\n  center = c(141.359719, 43.071776),\n  zoom = 13\n)\ncompare(m1, m2, mode = \"sync\")"
+  },
+  {
+    "objectID": "index.html#左右比較-output",
+    "href": "index.html#左右比較-output",
+    "title": "mapgl パッケージの紹介",
+    "section": "左右比較",
+    "text": "左右比較"
+  },
+  {
+    "objectID": "index.html#mapgl-パッケージの良いところ",
+    "href": "index.html#mapgl-パッケージの良いところ",
+    "title": "mapgl パッケージの紹介",
+    "section": "mapgl パッケージの良いところ",
+    "text": "mapgl パッケージの良いところ\n\nMapLibre GL JSでできることはけっこうできる\nコードも、MapLibre GL JS と似た API になっているので、MapLibre GL JS を使ったことがある人なら直感的に使える\nShiny と組み合わせるといろいろ面白いことできそう"
+  },
+  {
+    "objectID": "index.html#mapgl-パッケージの悪いところ",
+    "href": "index.html#mapgl-パッケージの悪いところ",
+    "title": "mapgl パッケージの紹介",
+    "section": "mapgl パッケージの悪いところ",
+    "text": "mapgl パッケージの悪いところ\n\nAPI が低レベルなので、コードが長くなりがち\n「これなら普通に JavaScript 書いた方がいいのでは…？」と思うこともけっこうある"
+  },
+  {
+    "objectID": "index.html#例さっきの色の指定",
+    "href": "index.html#例さっきの色の指定",
+    "title": "mapgl パッケージの紹介",
+    "section": "例:さっきの色の指定",
+    "text": "例:さっきの色の指定\n\n\njsonlite::toJSON(pal$expression, pretty = TRUE, auto_unbox = TRUE)\n\n[\n  \"case\",\n  [\n    \"==\",\n    [\n      \"get\",\n      \"L02_006\"\n    ],\n    {}\n  ],\n  \"grey\",\n  [\n    \"interpolate\",\n    [\n      \"linear\"\n    ],\n    [\n      \"get\",\n      \"L02_006\"\n    ],\n    670,\n    \"#FAEBDD\",\n    6300,\n    \"#F06043\",\n    20700,\n    \"#841E5A\",\n    5400000,\n    \"#03051A\"\n  ]\n]"
+  },
+  {
+    "objectID": "index.html#例さっきの色の指定-1",
+    "href": "index.html#例さっきの色の指定-1",
+    "title": "mapgl パッケージの紹介",
+    "section": "例:さっきの色の指定",
+    "text": "例:さっきの色の指定\n\nMapLibre のスタイルをそのまま R で書いてる感じ\nさすがに生すぎるのでは…？"
+  },
+  {
+    "objectID": "index.html#tmap.mapgl-パッケージ",
+    "href": "index.html#tmap.mapgl-パッケージ",
+    "title": "mapgl パッケージの紹介",
+    "section": "tmap.mapgl パッケージ",
+    "text": "tmap.mapgl パッケージ"
+  },
+  {
+    "objectID": "index.html#tmap.mapgl-パッケージ-1",
+    "href": "index.html#tmap.mapgl-パッケージ-1",
+    "title": "mapgl パッケージの紹介",
+    "section": "tmap.mapgl パッケージ",
+    "text": "tmap.mapgl パッケージ\n\nGIS データを可視化するパッケージ・tmap のバックエンドとして mapgl を使う\nつい最近 CRAN に登録された。"
+  },
+  {
+    "objectID": "index.html#tmap.mapgl-パッケージ-2",
+    "href": "index.html#tmap.mapgl-パッケージ-2",
+    "title": "mapgl パッケージの紹介",
+    "section": "tmap.mapgl パッケージ",
+    "text": "tmap.mapgl パッケージ\n\ntmap_mode(\"maplibre\")\n\ntm_shape(data) +\n  tm_symbols(\n    size = 0.6,\n    fill = \"L02_006\",\n    fill_alpha = 0.5,\n    fill.scale = tm_scale_continuous_log10(\n      values = \"-matplotlib.magma\"\n    )\n  )"
+  },
+  {
+    "objectID": "index.html#tmap.mapgl-パッケージ-2-output",
+    "href": "index.html#tmap.mapgl-パッケージ-2-output",
+    "title": "mapgl パッケージの紹介",
+    "section": "tmap.mapgl パッケージ",
+    "text": "tmap.mapgl パッケージ"
+  },
+  {
+    "objectID": "index.html#比較さっきまでのコード",
+    "href": "index.html#比較さっきまでのコード",
+    "title": "mapgl パッケージの紹介",
+    "section": "比較：さっきまでのコード",
+    "text": "比較：さっきまでのコード\n\npal &lt;- interpolate_palette(\n  data = data,\n  column = \"L02_006\", # カラム名\n  method = \"quantile\",\n  n = 4,\n  palette = scales::viridis_pal(option = \"F\", direction = -1)\n)\n\nmap |&gt;\n  add_circle_layer(\n    id = \"chika\",\n    source = data,\n    circle_radius = 8,\n    circle_opacity = 0.7,\n    circle_color = pal$expression\n  ) |&gt;\n  add_continuous_legend(\n    \"地価 [円]\",\n    values = get_legend_labels(pal, digits = 0),\n    colors = get_legend_colors(pal)\n  )"
+  },
+  {
+    "objectID": "index.html#tmap.mapgl-パッケージ-3",
+    "href": "index.html#tmap.mapgl-パッケージ-3",
+    "title": "mapgl パッケージの紹介",
+    "section": "tmap.mapgl パッケージ",
+    "text": "tmap.mapgl パッケージ\n\nmapgl パッケージを自分で使うよりも圧倒的に短く書ける\n対応していないレイヤーの種類もある（ヒートマップとか）\nこんな感じで、mapgl パッケージは直接使うものではなく、使いやすくラップしてくれているパッケージ越しに使うのが正解なのかも"
+  },
+  {
+    "objectID": "index.html#実際使うことはあるのか",
+    "href": "index.html#実際使うことはあるのか",
+    "title": "mapgl パッケージの紹介",
+    "section": "実際、使うことはあるのか？",
+    "text": "実際、使うことはあるのか？\n\n正直、leaflet パッケージの方が便利\n\nプラグインが豊富\nまあまあ使いやすいインターフェース\n\n3D表示をしたい時は mapgl が便利かも\n重いデータの表示も mapgl が上かも"
+  },
+  {
+    "objectID": "index.html#まとめ",
+    "href": "index.html#まとめ",
+    "title": "mapgl パッケージの紹介",
+    "section": "まとめ",
+    "text": "まとめ\n\nR から MapLibre を使いたい時は mapgl パッケージ\nmapgl パッケージを生で使うより、tmap.mapgl パッケージを使うと便利\n今後に期待！"
+  }
+]
