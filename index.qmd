@@ -5,7 +5,6 @@ author: "湯谷啓明"
 format:
   revealjs:
     theme: ["simple", "custom.scss"]
-    highlight-style: dracula
     slide-number: true
 ---
 
