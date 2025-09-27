@@ -1,6 +1,6 @@
 ---
 title: "mapgl パッケージ<br/>の紹介"
-subtitle: "2025-09-26 FOSS4G Hokkaido 2025"
+subtitle: "2025-09-27 FOSS4G Hokkaido 2025"
 author: "湯谷啓明"
 format:
   revealjs:
